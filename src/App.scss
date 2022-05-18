@@ -1,0 +1,10 @@
+$theme-colors: (
+  "primary": #333,
+  "light": #f4f4f4,
+);
+
+@import "~bootstrap/scss/bootstrap";
+
+a {
+  text-decoration: none;
+}
