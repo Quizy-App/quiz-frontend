@@ -3,6 +3,7 @@ import PrivateRoute from "./components/customRoutes/PrivateRoute";
 import ProtectedRoute from "./components/customRoutes/ProtectedRoute";
 import StudentRoute from "./components/customRoutes/StudentRoute";
 import TeacherRoute from "./components/customRoutes/TeacherRoute";
+import Screen1 from "./components/screens/Screen1";
 import { NotFound } from "./pages";
 
 const routes: RouteObject[] = [
@@ -15,13 +16,22 @@ const routes: RouteObject[] = [
       {
         path: "/teacher",
         element: <PrivateRoute />,
-        children: [],
+        children: [
+          {
+            index: true,
+            element: <Screen1 />,
+          },
+        ],
       },
       // ------------ Teacher's protected routes ----------------
       {
         path: "auth",
         element: <ProtectedRoute />,
         children: [
+          {
+            index: true,
+            element: <Screen1 />,
+          },
           {
             path: "*",
             element: <Navigate to="/404_not_found" />,
@@ -43,13 +53,22 @@ const routes: RouteObject[] = [
       {
         path: "/student",
         element: <PrivateRoute />,
-        children: [],
+        children: [
+          {
+            index: true,
+            element: <Screen1 />,
+          },
+        ],
       },
       // ------------ Student's protected routes ----------------
       {
         path: "auth",
         element: <ProtectedRoute />,
         children: [
+          {
+            index: true,
+            element: <Screen1 />,
+          },
           {
             path: "*",
             element: <Navigate to="/404_not_found" />,
