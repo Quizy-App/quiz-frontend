@@ -2,7 +2,10 @@ import React from "react";
 import CustomButton from "../../CustomButton";
 import CustomInput from "../../CustomInput";
 import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
 const StudentLogin = () => {
+  const navigate = useNavigate();
+
   const inputLabel = [
     {
       labelName: "Email",
@@ -18,7 +21,10 @@ const StudentLogin = () => {
         {inputLabel.map((label, i) => (
           <CustomInput key={i} label={label.labelName} />
         ))}
-        <CustomButton buttonLabel="Submit" onClick={() => "x"} />
+        <CustomButton
+          buttonLabel="Submit"
+          onClick={() => navigate("/student/auth/courses")}
+        />
       </section>
       <p className="text-gray-500 ">
         Don't have an account?{" "}

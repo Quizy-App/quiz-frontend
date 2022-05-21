@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className="w-full py-3 bg-primary-500">
       <Container>
         <a
-          href="#"
+          href="/student/auth"
           className="text-light-500 hover:text-neutral-50 flex items-center "
         >
           <Icon icon={"arcticons:quizlet"} fontSize={35} />
