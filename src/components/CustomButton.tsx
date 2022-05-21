@@ -1,9 +1,9 @@
-import { FC, ReactNode } from "react";
+import { FC, MouseEventHandler, ReactNode } from "react";
 import cn from "classnames";
 
 import { overrideTailwindClasses as ov } from "tailwind-override";
 type Props = {
-  onClick: Function;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   classNames?: string;
   buttonLabel: string;
   hide?: boolean;
@@ -25,19 +25,18 @@ const CustomButton: FC<Props> = ({
   return (
     <button
       type="submit"
-      onClick={() => onClick()}
+      onClick={onClick}
       disabled={disabled}
-      className={cn(
-        ov(
-          `block bg-primary-500 w-full text-xs tracking-wide capitalize transition duration-300 hover:bg-primary-300  scale-100 text-white my-6 rounded-sm  py-[0.7rem] ${classNames}`
-        ),
-
-        {
-          "opacity-0 pointer-events-none scale-0": hide,
-        },
-        {
-          "bg-slate-200 pointer-events-none": disabled,
-        }
+      className={ov(
+        cn(
+          `block bg-primary-500 w-full  tracking-wide capitalize transition duration-300 hover:bg-primary-300  scale-100 text-white my-6 rounded-sm  py-[0.7rem]  text-sm font-medium  ${classNames}`,
+          {
+            "opacity-0 pointer-events-none scale-0": hide,
+          },
+          {
+            "bg-slate-200 pointer-events-none": disabled,
+          }
+        )
       )}
     >
       {jsx ? (

@@ -1,6 +1,8 @@
 import SubjectCard from "../../SubjectCard";
+import { useNavigate } from "react-router-dom";
 
 const StudentCoursesView = () => {
+  const navigate = useNavigate();
   return (
     <main className="max-w-7xl  w-full mx-auto ">
       {/* Welcome Heading */}
@@ -21,9 +23,16 @@ const StudentCoursesView = () => {
       </section>
 
       {/* Subject cards */}
-      <section className="grid sm:grid-cols-3 gap-4 pt-4">
+      <section className="grid md:grid-cols-3 sm:grid-cols-2 gap-4 py-4">
         {[1, 2, 3, 4].map((card, i) => (
-          <SubjectCard key={i} />
+          <SubjectCard
+            onClick={() =>
+              navigate("/student/auth/instructions", {
+                replace: false,
+              })
+            }
+            key={i}
+          />
         ))}
       </section>
     </main>

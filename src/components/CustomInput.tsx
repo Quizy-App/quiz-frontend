@@ -6,6 +6,7 @@ type CustomProps = {
   label: string;
   type?: string;
   isAlert?: boolean;
+  labelClass?: string;
 };
 
 type Props = CustomProps & HTMLProps<HTMLInputElement>;
@@ -13,15 +14,20 @@ const CustomInput: FC<Props> = ({
   label,
   type = "text",
   isAlert,
+  labelClass,
   ...props
 }) => {
   return (
     <div className="py-2 ">
       <label
         htmlFor=""
-        className={cn("block text-gray-700 pb-1", {
-          "text-red-500  ": isAlert,
-        })}
+        className={cn(
+          "block text-gray-700 pb-1 font-medium ",
+          {
+            "text-red-500  ": isAlert,
+          },
+          labelClass
+        )}
       >
         {label}
       </label>

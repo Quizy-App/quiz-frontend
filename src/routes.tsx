@@ -6,8 +6,13 @@ import TeacherRoute from "./components/customRoutes/TeacherRoute";
 import {
   StudentCoursesView,
   StudentLogin,
+  StudentQuizInstructions,
+  StudentResult,
   StudentSignUp,
 } from "./components/screens/students";
+import StudentQuizQA from "./components/screens/students/StudentQuizQA";
+import { TeacherAddSubject } from "./components/screens/teachers";
+import TeacherAddQuestions from "./components/screens/teachers/TeacherAddQuestions";
 import { NotFound } from "./pages";
 
 const routes: RouteObject[] = [
@@ -24,12 +29,12 @@ const routes: RouteObject[] = [
       {
         path: "/teacher",
         element: <PrivateRoute />,
-        // children: [
-        //   {
-        //     index: true,
-        //     element: <Screen1 />,
-        //   },
-        // ],
+        children: [
+          {
+            index: true,
+            element: <TeacherAddSubject />,
+          },
+        ],
       },
       // ------------ Teacher's protected routes ----------------
       {
@@ -38,7 +43,11 @@ const routes: RouteObject[] = [
         children: [
           {
             index: true,
-            // element: <Screen1 />,
+            element: <TeacherAddSubject />,
+          },
+          {
+            path: "add_que",
+            element: <TeacherAddQuestions />,
           },
           {
             path: "*",
@@ -84,6 +93,18 @@ const routes: RouteObject[] = [
           {
             path: "courses",
             element: <StudentCoursesView />,
+          },
+          {
+            path: "instructions",
+            element: <StudentQuizInstructions />,
+          },
+          {
+            path: "quiz",
+            element: <StudentQuizQA />,
+          },
+          {
+            path: "result",
+            element: <StudentResult />,
           },
           {
             path: "*",

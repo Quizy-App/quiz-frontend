@@ -1,12 +1,20 @@
-const SubjectCard = () => {
+import { FC, MouseEventHandler } from "react";
+
+type Props = {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+};
+
+const SubjectCard: FC<Props> = ({ onClick }) => {
   return (
-    <div className="border-[1px] rounded-sm">
-      <div className="relative overflow-hidden">
+    <div className="border-[1.4px] border-primary-300 rounded-sm">
+      <button className="relative overflow-hidden w-full" onClick={onClick}>
         <div className="absolute bottom-0 p-2 flex justify-between w-full z-[2] ">
-          <span className="font-medium text-xs ">Mechatronic</span>
+          <span className="font-medium text-sm text-white tracking-wider   ">
+            Mechatronic
+          </span>
           <div className="flex gap-2">
-            <span className="text-xs font-semibold">Duration</span>
-            <span className="font-bold text-xs ">20 min</span>
+            <span className=" text-sm text-white tracking-wide">Duration</span>
+            <span className=" font-medium text-sm text-white ">20 min</span>
           </div>
         </div>
         <img
@@ -15,7 +23,7 @@ const SubjectCard = () => {
             "https://images.unsplash.com/photo-1540835296355-c04f7a063cbb?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170"
           }
         />
-      </div>
+      </button>
 
       <div className="p-3 flex justify-between items-center">
         <div className="flex gap-2">

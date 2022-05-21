@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  outline: none;
+@layer base {
+  * {
+    outline: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    @apply bg-primary-500;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-primary-200;
+  }
 }
 
-::-webkit-scrollbar {
-  width: 4px;
-  @apply bg-primary-200;
-}
-::-webkit-scrollbar-thumb {
-  @apply rounded-lg bg-primary-500;
-}
-
-.cubic-b1 {
-  transition-timing-function: cubic-bezier(0.48, -0.72, 0, 1.54);
+@layer utilities {
+  .cubic-b1 {
+    transition-timing-function: cubic-bezier(0.48, -0.72, 0, 1.54);
+  }
 }
