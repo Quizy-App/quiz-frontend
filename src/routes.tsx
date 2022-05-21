@@ -3,10 +3,13 @@ import PrivateRoute from "./components/customRoutes/PrivateRoute";
 import ProtectedRoute from "./components/customRoutes/ProtectedRoute";
 import StudentRoute from "./components/customRoutes/StudentRoute";
 import TeacherRoute from "./components/customRoutes/TeacherRoute";
-import Screen1 from "./components/screens/Screen1";
 import { NotFound } from "./pages";
 
 const routes: RouteObject[] = [
+  {
+    path: "/",
+    element: <Navigate to="/student" />,
+  },
   // ------------ For Teacher Only ----------------
   {
     path: "teacher",
@@ -16,12 +19,12 @@ const routes: RouteObject[] = [
       {
         path: "/teacher",
         element: <PrivateRoute />,
-        children: [
-          {
-            index: true,
-            element: <Screen1 />,
-          },
-        ],
+        // children: [
+        //   {
+        //     index: true,
+        //     element: <Screen1 />,
+        //   },
+        // ],
       },
       // ------------ Teacher's protected routes ----------------
       {
@@ -30,7 +33,7 @@ const routes: RouteObject[] = [
         children: [
           {
             index: true,
-            element: <Screen1 />,
+            // element: <Screen1 />,
           },
           {
             path: "*",
@@ -54,10 +57,10 @@ const routes: RouteObject[] = [
         path: "/student",
         element: <PrivateRoute />,
         children: [
-          {
-            index: true,
-            element: <Screen1 />,
-          },
+          // {
+          //   index: true,
+          //   element: <Screen1 />,
+          // },
         ],
       },
       // ------------ Student's protected routes ----------------
@@ -65,10 +68,10 @@ const routes: RouteObject[] = [
         path: "auth",
         element: <ProtectedRoute />,
         children: [
-          {
-            index: true,
-            element: <Screen1 />,
-          },
+          // {
+          //   index: true,
+          //   element: <Screen1 />,
+          // },
           {
             path: "*",
             element: <Navigate to="/404_not_found" />,

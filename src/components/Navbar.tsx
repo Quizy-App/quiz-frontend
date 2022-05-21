@@ -1,23 +1,14 @@
-import { Navbar as AppBar, Nav, Container } from "react-bootstrap";
+import Container from "./Container";
 
 const Navbar = () => {
   return (
-    <AppBar bg="primary" expand="lg" variant="dark">
+    <nav className="w-full py-2 bg-primary-500">
       <Container>
-        <AppBar.Brand href="#home">Quiz App</AppBar.Brand>
-
-        <Nav>
-          <AppBar.Toggle aria-controls="responsive-navbar-nav" />
-          <AppBar.Collapse
-            id="responsive-navbar-nav"
-            className="justify-content-end"
-          >
-            <Nav.Link href="#features">Login</Nav.Link>
-            <Nav.Link href="#features">Register</Nav.Link>
-          </AppBar.Collapse>
-        </Nav>
+        <a href="#" className="text-light-500">
+          Quiz App
+        </a>
       </Container>
-    </AppBar>
+    </nav>
   );
 };
 
