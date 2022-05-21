@@ -12,7 +12,7 @@ const SubjectCard = () => {
         <img
           className="object-cover block w-full h-full opacity-90 hover:opacity-100 transition     hover:scale-110"
           src={
-            "https://media.istockphoto.com/photos/and-a-question-and-answer-shot-form-on-wooden-block-picture-id1337475990?s=2048x2048"
+            "https://images.unsplash.com/photo-1540835296355-c04f7a063cbb?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170"
           }
         />
       </div>
