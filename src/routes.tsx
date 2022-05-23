@@ -107,6 +107,7 @@ const routes: RouteObject[] = [
             index: true,
             element: <StudentLogin />,
           },
+
           {
             path: "sign_up",
             element: <StudentSignUp />,

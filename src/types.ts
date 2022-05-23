@@ -38,3 +38,21 @@ export interface Subject {
   createdOn: string;
   __v: number;
 }
+
+export interface QuizAns {
+  _id: string;
+  title: string;
+  isPreferred: string;
+  questionId: string;
+  userId: string;
+  createdOn: string;
+  __v: number;
+}
+
+export type SubjectType = {
+  _id: string;
+  name: string;
+  year: number;
+  createdOn: string;
+  __v: number;
+};

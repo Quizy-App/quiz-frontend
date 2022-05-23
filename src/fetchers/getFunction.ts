@@ -73,3 +73,15 @@ export const getProfileInfo = async () => {
     }
   }
 };
+
+// Function to get profile info
+export const getSubjectList = async (year: string) => {
+  try {
+    const res = await axios.get(`${apiUrl}/quiz/fetch_subjects/${year}`);
+    return res.data;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      throw err.response;
+    }
+  }
+};

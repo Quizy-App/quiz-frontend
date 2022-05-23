@@ -2,26 +2,34 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Navigate, Outlet } from "react-router-dom";
+import { logoutUser, profileSet } from "../../features/userSlice";
 import { getProfileInfo } from "../../fetchers/getFunction";
-import { useAppSelector } from "../../hooks/stateHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/stateHooks";
 import apiUrl from "../../utils/apiUrl";
 
 const PrivateRoute = () => {
+  const dispatch = useAppDispatch();
   const { accessToken, userType } = useAppSelector((state) => state.user);
 
-  const { data } = useQuery(["profile"], getProfileInfo);
+  const { data, isLoading } = useQuery(["profile"], getProfileInfo);
 
   // const { authToken, userType } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    if (data) {
-      console.log(data);
+    if (!isLoading) {
+      if (data?.name) {
+        dispatch(profileSet(data));
+      }
+      // else {
+      //   dispatch(logoutUser());
+      // }
     }
-  }, []);
+  }, [isLoading]);
 
   // Function to set default header auth token in axios
   const setDefaultToken = () => {
     axios.defaults.baseURL = apiUrl;
+
     if (accessToken) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     } else {

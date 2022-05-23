@@ -68,7 +68,7 @@ const TeacherAddQuestions = () => {
       mutate({
         title: question,
         marks: mark,
-        subjectid: subjectId,
+        subjectId: subjectId,
       });
     }
   };
@@ -100,7 +100,7 @@ const TeacherAddQuestions = () => {
       {/* Welcome Heading */}
       <section>
         <div className="flex  flex-col justify-between py-4 gap-3">
-          <h1 className="text-3xl font-medium">Welcome Teacher</h1>
+          <h1 className="text-3xl font-medium">Add your subject questions</h1>
           <h3 className="font-medium">
             Add choices for{" "}
             <span className="font-bold tracking-wider">
@@ -191,11 +191,11 @@ const TeacherAddQuestions = () => {
                   </div>
                 ))}
               </section>
-
               <CustomButton
-                buttonLabel="Submit and Next"
+                buttonLabel="Submit And Next"
                 onClick={() => "x"}
-                classNames="text-sm font-medium tracking-wider bg-white text-primary-500 border-[1.4px] border-primary-500 hover:bg-primary-300"
+                classNames="text-sm font-medium tracking-wider my-4"
+                disabled
               />
             </div>
           </section>

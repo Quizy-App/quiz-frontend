@@ -26,9 +26,9 @@ const StudentQuizInstructions = () => {
             </ul>
           </div>
           <CustomButton
-            onClick={() => navigate("/student/auth/quiz")}
+            onClick={() => navigate("/student/quiz")}
             buttonLabel="Attempt Quiz"
-            classNames="text-sm font-medium tracking-widest"
+            classNames="text-sm font-medium tracking-widest mt-4"
           />
         </div>
       </section>

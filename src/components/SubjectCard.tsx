@@ -1,16 +1,18 @@
 import { FC, MouseEventHandler } from "react";
+import { SubjectType } from "../types";
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
+  card: SubjectType;
 };
 
-const SubjectCard: FC<Props> = ({ onClick }) => {
+const SubjectCard: FC<Props> = ({ onClick, card }) => {
   return (
     <div className="border-[1.4px] border-primary-300 rounded-sm">
       <button className="relative overflow-hidden w-full" onClick={onClick}>
         <div className="absolute bottom-0 p-2 flex justify-between w-full z-[2] ">
           <span className="font-medium text-sm text-white tracking-wider   ">
-            Mechatronic
+            {card?.name}
           </span>
           <div className="flex gap-2">
             <span className=" text-sm text-white tracking-wide">Duration</span>
@@ -32,7 +34,7 @@ const SubjectCard: FC<Props> = ({ onClick }) => {
         </div>
         <div className="flex gap-2">
           <span className="font-medium text-sm">Total Marks</span>
-          <span className="font-semibold text-sm">8</span>
+          <span className="font-semibold text-sm">30</span>
         </div>
       </div>
     </div>
