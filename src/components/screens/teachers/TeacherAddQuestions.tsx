@@ -9,6 +9,41 @@ const TeacherAddQuestions = () => {
   const { subjectId } = useAppSelector((state) => state.teacher);
 
   const [mark, setMark] = useState(0);
+
+  type ChoiceType = {
+    label: string;
+    title: string;
+    isPreferred: boolean;
+    questionId: string;
+  };
+
+  const [choice, setChoice] = useState<ChoiceType[]>([
+    {
+      label: "one",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+    {
+      label: "two",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+    {
+      label: "three",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+    {
+      label: "four",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+  ]);
+
   const [question, setQuestion] = useState("");
   type Answer = {
     name: string;
@@ -33,14 +68,18 @@ const TeacherAddQuestions = () => {
     }
   };
 
-  const handleChange = (name: string, val: string) => {
-    setAnswers([
-      ...answers,
-      {
-        name: name,
-        text: val,
-      },
-    ]);
+  const handleChange = (label: string, val: string) => {
+    // setChoice(choice.map(v => v.label === label?{...v,title: val,questionId:subjectId} : choice));
+  };
+
+  const radioButtonChange = (label: string, radioValue: boolean) => {
+    // setChoice(
+    //   choice.map((c => c.label === label ? {
+    //     ...c,
+    //     isPreferred:radioValue,
+    //   } : choice
+    //   ))
+    // )
   };
   useEffect(() => {
     setMark(1);
@@ -72,7 +111,7 @@ const TeacherAddQuestions = () => {
           <h6 className="text-sm font-medium">
             This question will carry{" "}
             <select
-              value={1}
+              defaultValue={1}
               className=" border-[2px] border-blue-500 rounded-sm   mx-2"
               onChange={(e) => {
                 console.log(e.currentTarget.value);
@@ -113,14 +152,16 @@ const TeacherAddQuestions = () => {
 
               {/* Choices */}
               <section>
-                {[1, 2, 3, 4].map((v, i) => (
+                {choice.map((v, i) => (
                   <div className="my-2" key={i}>
                     <label htmlFor="" className="block">
                       Choice {i + 1}
                     </label>
                     <div className="flex gap-6 items-center mt-2">
                       <input
-                        onChange={(e) => console.log(e)}
+                        onChange={(e) =>
+                          radioButtonChange(v.label, e.target.checked)
+                        }
                         type="radio"
                         name="answer"
                         // checked={v===}
@@ -131,7 +172,7 @@ const TeacherAddQuestions = () => {
                         type="text"
                         name={"input" + v}
                         onChange={(e) =>
-                          handleChange(`input${v}`, e.currentTarget.value)
+                          handleChange(v.label, e.currentTarget.value)
                         }
                         className={ov(
                           cn(

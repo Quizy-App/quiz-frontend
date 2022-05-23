@@ -54,19 +54,7 @@ const TeacherLogin = () => {
     <main className="max-w-4xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
       <section className="   sm:w-[60%] w-full">
         <div className="flex gap-2 items-center justify-center py-4">
-          <div className="flex items-center">
-            <Icon
-              icon={"arcticons:quizlet"}
-              className="text-blue-400"
-              fontSize={45}
-            />
-            <span className="tracking-widest text-2xl text-blue-400 ml-[0.1rem] md:block hidden">
-              {" "}
-              uizzer
-            </span>
-          </div>
-
-          <h2 className="text-2xl text-primary-400 ">Teacher Login</h2>
+          <h2 className="text-4xl font-bold text-primary-400 ">Login</h2>
         </div>
 
         <CustomInput
