@@ -34,7 +34,7 @@ const userSlice = createSlice({
     },
     logoutUser: (state) => {
       state.accessToken = null;
-      localStorage.removeItem("auth-token");
+      localStorage.removeItem("access-token");
     },
   },
 });
