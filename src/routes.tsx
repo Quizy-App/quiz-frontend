@@ -11,7 +11,11 @@ import {
   StudentSignUp,
 } from "./components/screens/students";
 import StudentQuizQA from "./components/screens/students/StudentQuizQA";
-import { TeacherAddSubject } from "./components/screens/teachers";
+import {
+  TeacherAddSubject,
+  TeacherLogin,
+  TeacherSignUp,
+} from "./components/screens/teachers";
 import TeacherAddQuestions from "./components/screens/teachers/TeacherAddQuestions";
 import { NotFound } from "./pages";
 
@@ -43,7 +47,11 @@ const routes: RouteObject[] = [
         children: [
           {
             index: true,
-            element: <TeacherAddSubject />,
+            element: <TeacherLogin />,
+          },
+          {
+            path: "sign_up",
+            element: <TeacherSignUp />,
           },
           {
             path: "add_que",

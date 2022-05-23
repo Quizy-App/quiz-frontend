@@ -2,6 +2,7 @@ import { FC, HTMLProps } from "react";
 
 import cn from "classnames";
 import { overrideTailwindClasses as ov } from "tailwind-override";
+
 type CustomProps = {
   label: string;
   type?: string;
