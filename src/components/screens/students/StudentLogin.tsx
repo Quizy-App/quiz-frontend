@@ -81,12 +81,14 @@ const StudentLogin = () => {
 
         {/* {inputLabel.map((label, i) => ( */}
         <CustomInput
+          placeholder="Enter your email"
           type="email"
           label="Email"
           value={loginDetails.email}
           onChange={(e) => handleDetails("email", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your password"
           type="password"
           label="Password"
           value={loginDetails.password}

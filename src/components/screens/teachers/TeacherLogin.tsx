@@ -70,18 +70,25 @@ const TeacherLogin = () => {
         </div>
 
         <CustomInput
+          placeholder="Enter your email"
           type="email"
           label="Email"
           value={loginDetails.email}
           onChange={(e) => handleDetails("email", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your password"
           type="password"
           label="Password"
           value={loginDetails.password}
           onChange={(e) => handleDetails("password", e.currentTarget.value)}
         />
-        <CustomButton buttonLabel="Login" onClick={onLogin} />
+        <CustomButton
+          classNames="mt-3"
+          buttonLabel="Login"
+          onClick={onLogin}
+          disabled={!loginDetails.email || !loginDetails.password}
+        />
       </section>
       <p className="text-gray-500 ">
         Don't have an account?{" "}

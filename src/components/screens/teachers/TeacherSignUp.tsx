@@ -81,34 +81,46 @@ const TeacherSignUp = () => {
       </div>
       <section className=" grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
         <CustomInput
+          placeholder="Enter your first name"
           label="First Name"
           value={teacher.firstName}
           onChange={(e) => handleDetails("firstName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your last name"
           label="Last Name"
           value={teacher.lastName}
           onChange={(e) => handleDetails("lastName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your email"
           type="email"
           label="Email"
           value={teacher.email}
           onChange={(e) => handleDetails("email", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your password"
           type="password"
           label="Password"
           value={teacher.password}
           onChange={(e) => handleDetails("password", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your confirm password"
           type="password"
           label="Confirm Password"
           value={teacher.confirmPwd}
           onChange={(e) => handleDetails("confirmPwd", e.currentTarget.value)}
         />
         <CustomButton
+          disabled={
+            teacher.password.length < 5 ||
+            !teacher.confirmPwd ||
+            !teacher.email ||
+            !teacher.firstName ||
+            !teacher.lastName
+          }
           buttonLabel="Sign Up"
           classNames="sm:col-span-2"
           onClick={onRegisterTeacher}

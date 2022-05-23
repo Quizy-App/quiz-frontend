@@ -86,24 +86,28 @@ const StudentSignUp = () => {
       <section className=" grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
         {/* {inputLabel.map((label, i) => ( */}
         <CustomInput
+          placeholder="Enter your first name"
           label="First Name"
           parentClass="col-span-2 sm:col-span-1"
           value={student.firstName}
           onChange={(e) => handleDetails("firstName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your last name"
           parentClass="col-span-2 sm:col-span-1"
           label="Last Name"
           value={student.lastName}
           onChange={(e) => handleDetails("lastName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your enrollmentNo"
           parentClass="col-span-2 sm:col-span-1"
           label="Enrollment No."
           value={student.enrollmentNo}
           onChange={(e) => handleDetails("enrollmentNo", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your number"
           parentClass="col-span-2 sm:col-span-1"
           label="Year"
           type="number"
@@ -111,6 +115,7 @@ const StudentSignUp = () => {
           onChange={(e) => handleDetails("year", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your year"
           parentClass="col-span-2 "
           type="email"
           label="Email"
@@ -118,6 +123,7 @@ const StudentSignUp = () => {
           onChange={(e) => handleDetails("email", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your password"
           parentClass="col-span-2 sm:col-span-1"
           type="password"
           label="Password"
@@ -125,6 +131,7 @@ const StudentSignUp = () => {
           onChange={(e) => handleDetails("password", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your confirm password"
           parentClass="col-span-2 sm:col-span-1"
           type="password"
           label="Confirm Password"
