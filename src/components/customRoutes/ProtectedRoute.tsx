@@ -1,16 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAppSelector } from "../../hooks/stateHooks";
 
 const ProtectedRoute = () => {
-  return (
-    // userType === "candidate" ? (
+  const { accessToken } = useAppSelector((state) => state.user);
+  const { userType } = useAppSelector((state) => state.user);
+
+  return !accessToken || !userType ? (
     <Outlet />
-    //     ) : (
-    //       <Navigate to="/recruiter" />
-    //     )
-    //   ) : (
-    //     <Navigate to="/" />
-    //   );
-    // }
+  ) : (
+    <Navigate to={`/${userType}`} />
   );
 };
 

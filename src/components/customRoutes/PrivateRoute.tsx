@@ -1,17 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAppSelector } from "../../hooks/stateHooks";
 
 const PrivateRoute = () => {
-  return (
-    // userType === "candidate" ? (
-    <Outlet />
-    //     ) : (
-    //       <Navigate to="/recruiter" />
-    //     )
-    //   ) : (
-    //     <Navigate to="/" />
-    //   );
-    // }
-  );
+  const { accessToken, userType } = useAppSelector((state) => state.user);
+
+  return accessToken ? <Outlet /> : <Navigate to={`/${userType}/auth`} />;
 };
 
 export default PrivateRoute;

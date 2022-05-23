@@ -2,14 +2,17 @@ import CustomButton from "../../CustomButton";
 import CustomInput from "../../CustomInput";
 // import { userM } from 'react-query'
 import { Icon } from "@iconify/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { StudentRegister } from "../../../types";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { registerStudentRequest } from "../../../fetchers/student";
+import { useAppDispatch } from "../../../hooks/stateHooks";
+import { storeStudent } from "../../../features/studentSlice";
+import { storeToken } from "../../../features/userSlice";
 
 const StudentSignUp = () => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [student, setStudent] = useState<
     StudentRegister & {
       firstName?: string;
@@ -28,33 +31,16 @@ const StudentSignUp = () => {
     confirmPwd: "",
   });
 
-  const inputLabel = [
-    {
-      labelName: "First Name",
-    },
-    {
-      labelName: "Last Name",
-    },
-    {
-      labelName: "Enrollment No",
-    },
-    {
-      labelName: "Year",
-    },
-    {
-      labelName: "Email",
-    },
-    {
-      labelName: "Password",
-    },
-    {
-      labelName: "Confirm Password",
-    },
-  ];
-
   // Register student
   const { mutate: registerMutate } = useMutation(registerStudentRequest, {
-    onSuccess: (data) => console.log(data),
+    onSuccess: (data) => {
+      dispatch(storeToken(data?.accessToken));
+      dispatch(
+        storeStudent({
+          profile: data?.student,
+        })
+      );
+    },
     onError: (err) => console.log(err),
   });
 

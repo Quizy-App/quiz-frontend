@@ -19,3 +19,14 @@ export interface Student {
   name: string;
   year: string;
 }
+
+export interface TeacherRegister {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface Teacher {
+  email: string;
+  name: string;
+}

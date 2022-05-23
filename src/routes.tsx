@@ -79,10 +79,22 @@ const routes: RouteObject[] = [
         path: "/student",
         element: <PrivateRoute />,
         children: [
-          // {
-          //   index: true,
-          //   element: <Screen1 />,
-          // },
+          {
+            index: true,
+            element: <StudentCoursesView />,
+          },
+          {
+            path: "instructions",
+            element: <StudentQuizInstructions />,
+          },
+          {
+            path: "quiz",
+            element: <StudentQuizQA />,
+          },
+          {
+            path: "result",
+            element: <StudentResult />,
+          },
         ],
       },
       // ------------ Student's protected routes ----------------
@@ -97,22 +109,6 @@ const routes: RouteObject[] = [
           {
             path: "sign_up",
             element: <StudentSignUp />,
-          },
-          {
-            path: "courses",
-            element: <StudentCoursesView />,
-          },
-          {
-            path: "instructions",
-            element: <StudentQuizInstructions />,
-          },
-          {
-            path: "quiz",
-            element: <StudentQuizQA />,
-          },
-          {
-            path: "result",
-            element: <StudentResult />,
           },
           {
             path: "*",

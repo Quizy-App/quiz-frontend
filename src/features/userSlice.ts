@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserState {
   userType: "teacher" | "student" | null;
-  authToken: string | null;
+  accessToken: string | null;
 }
 
 const storedUserType = localStorage.getItem("user-type") as
   | "teacher"
   | "student";
-const storedAuthToken = localStorage.getItem("auth-token") as string;
+const storedAccessToken = localStorage.getItem("access-token") as string;
 
 const initialState: UserState = {
-  userType: storedUserType,
-  authToken: storedAuthToken,
+  userType: storedUserType || "student",
+  accessToken: storedAccessToken,
 };
 
 const userSlice = createSlice({
@@ -27,20 +27,19 @@ const userSlice = createSlice({
       state.userType = "teacher";
       localStorage.setItem("user-type", state.userType);
     },
-    // storeToken: (state, action: PayloadAction<UserCredential>) => {
-    //   state.authToken = action.payload.authToken;
-    //   state.userId = action.payload.userId;
-    //   state.onboardingStage = action.payload.onboardingStage;
-    //   localStorage.setItem("auth-token", state.authToken);
-    //   localStorage.setItem("user-id", state.userId.toString());
-    // },
+    storeToken: (state, action: PayloadAction<string>) => {
+      console.log(action.payload);
+      state.accessToken = action.payload;
+      localStorage.setItem("access-token", state.accessToken);
+    },
     logoutUser: (state) => {
-      state.authToken = null;
+      state.accessToken = null;
       localStorage.removeItem("auth-token");
     },
   },
 });
 
-export const { logoutUser, makeStudent, makeTeacher } = userSlice.actions;
+export const { logoutUser, makeStudent, makeTeacher, storeToken } =
+  userSlice.actions;
 
 export default userSlice.reducer;
