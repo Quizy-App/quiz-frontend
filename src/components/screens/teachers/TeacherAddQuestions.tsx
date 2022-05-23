@@ -3,13 +3,18 @@ import CustomButton from "../../CustomButton";
 import cn from "classnames";
 import { overrideTailwindClasses as ov } from "tailwind-override";
 import { useAppSelector } from "../../../hooks/stateHooks";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { addQues } from "../../../fetchers/teacher";
+import { getSubjectsInfo } from "../../../fetchers/getFunction";
 const TeacherAddQuestions = () => {
   const { subjectId } = useAppSelector((state) => state.teacher);
 
   const [mark, setMark] = useState(0);
-
+  const { data, isLoading: subjectLoading } = useQuery(
+    ["subject-info", subjectId],
+    ({ queryKey }) => getSubjectsInfo(queryKey[1]),
+    {}
+  );
   type ChoiceType = {
     label: string;
     title: string;
@@ -98,7 +103,9 @@ const TeacherAddQuestions = () => {
           <h1 className="text-3xl font-medium">Welcome Teacher</h1>
           <h3 className="font-medium">
             Add choices for{" "}
-            <span className="font-bold tracking-wider">Chemistry</span>
+            <span className="font-bold tracking-wider">
+              {!subjectLoading ? data.subject.name : ""}
+            </span>
           </h3>
         </div>
       </section>
