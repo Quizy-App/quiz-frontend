@@ -57,7 +57,6 @@ const TeacherAddSubject = () => {
               Choose Year
             </span>
             <select
-              value={year}
               className="py-2 border-[2px] border-blue-500 rounded-sm w-full px-10"
               onChange={(e) => {
                 setYear(Number(e.currentTarget.value));

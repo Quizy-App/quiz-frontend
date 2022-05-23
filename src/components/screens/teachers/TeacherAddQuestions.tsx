@@ -10,6 +10,11 @@ const TeacherAddQuestions = () => {
 
   const [mark, setMark] = useState(0);
   const [question, setQuestion] = useState("");
+  type Answer = {
+    name: string;
+    text: string;
+  };
+  const [answers, setAnswers] = useState<Answer[]>([]);
 
   const { mutate } = useMutation(addQues, {
     onSuccess(data) {
@@ -28,9 +33,24 @@ const TeacherAddQuestions = () => {
     }
   };
 
+  const handleChange = (name: string, val: string) => {
+    setAnswers([
+      ...answers,
+      {
+        name: name,
+        text: val,
+      },
+    ]);
+  };
   useEffect(() => {
-    console.log(mark);
-  }, [mark]);
+    setMark(1);
+  }, []);
+
+  useEffect(() => {
+    console.log(mark, answers);
+  }, [mark, answers]);
+
+  const questionOptions = [{}];
   return (
     <main className="max-w-7xl mx-auto">
       {/* Welcome Heading */}
@@ -52,6 +72,7 @@ const TeacherAddQuestions = () => {
           <h6 className="text-sm font-medium">
             This question will carry{" "}
             <select
+              value={1}
               className=" border-[2px] border-blue-500 rounded-sm   mx-2"
               onChange={(e) => {
                 console.log(e.currentTarget.value);
@@ -62,12 +83,7 @@ const TeacherAddQuestions = () => {
                 Select marks
               </option>
               {[1, 2, 3, 4, 5].map((year, i) => (
-                <option
-                  className="font-semibold"
-                  value={year}
-                  key={i}
-                  selected={i === 0}
-                >
+                <option className="font-semibold" value={year} key={i}>
                   {year}
                 </option>
               ))}
@@ -104,16 +120,19 @@ const TeacherAddQuestions = () => {
                     </label>
                     <div className="flex gap-6 items-center mt-2">
                       <input
+                        onChange={(e) => console.log(e)}
                         type="radio"
                         name="answer"
-                        id=""
+                        // checked={v===}
                         className="w-5 h-5"
                       />
 
                       <input
                         type="text"
-                        name=""
-                        id=""
+                        name={"input" + v}
+                        onChange={(e) =>
+                          handleChange(`input${v}`, e.currentTarget.value)
+                        }
                         className={ov(
                           cn(
                             "border-1 border-gray-400 py-2 px-2  rounded-sm text-gray-500 w-full"
