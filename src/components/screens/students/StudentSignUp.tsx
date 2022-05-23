@@ -54,7 +54,11 @@ const StudentSignUp = () => {
 
   // Register student
   const { mutate: registerMutate } = useMutation(registerStudentRequest, {
-    onSuccess: (data) => console.log(data),
+    onSuccess: (data) => {
+      if (data) {
+        navigate("/student/auth/courses");
+      }
+    },
     onError: (err) => console.log(err),
   });
 
@@ -71,6 +75,7 @@ const StudentSignUp = () => {
     if (student.password !== student.confirmPwd) {
       return console.log("Password not matched");
     }
+
     const newStudent = { ...student };
     newStudent.name = `${student.firstName} ${student.lastName}`;
     delete newStudent.firstName;
@@ -80,7 +85,7 @@ const StudentSignUp = () => {
     registerMutate(newStudent);
   };
   return (
-    <main className="max-w-4xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
+    <main className="max-w-xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
       <div className="flex gap-2 items-center justify-center py-4">
         <div className="flex items-center">
           <Icon
@@ -100,47 +105,61 @@ const StudentSignUp = () => {
         {/* {inputLabel.map((label, i) => ( */}
         <CustomInput
           label="First Name"
+          parentClass="col-span-2 sm:col-span-1"
           value={student.firstName}
           onChange={(e) => handleDetails("firstName", e.currentTarget.value)}
         />
         <CustomInput
+          parentClass="col-span-2 sm:col-span-1"
           label="Last Name"
           value={student.lastName}
           onChange={(e) => handleDetails("lastName", e.currentTarget.value)}
         />
         <CustomInput
+          parentClass="col-span-2 sm:col-span-1"
           label="Enrollment No."
           value={student.enrollmentNo}
           onChange={(e) => handleDetails("enrollmentNo", e.currentTarget.value)}
         />
         <CustomInput
+          parentClass="col-span-2 sm:col-span-1"
           label="Year"
           type="number"
           value={student.year}
           onChange={(e) => handleDetails("year", e.currentTarget.value)}
         />
         <CustomInput
+          parentClass="col-span-2 "
           type="email"
           label="Email"
           value={student.email}
           onChange={(e) => handleDetails("email", e.currentTarget.value)}
         />
         <CustomInput
+          parentClass="col-span-2 sm:col-span-1"
           type="password"
           label="Password"
           value={student.password}
           onChange={(e) => handleDetails("password", e.currentTarget.value)}
         />
         <CustomInput
+          parentClass="col-span-2 sm:col-span-1"
           type="password"
           label="Confirm Password"
           value={student.confirmPwd}
           onChange={(e) => handleDetails("confirmPwd", e.currentTarget.value)}
         />
-        {/* ))} */}
+
         <CustomButton
+          disabled={
+            student.password.length < 5 ||
+            !student.confirmPwd ||
+            !student.email ||
+            !student.firstName ||
+            !student.lastName
+          }
           buttonLabel="Sign Up"
-          classNames="sm:col-span-2"
+          classNames="col-span-2 "
           onClick={onRegisterStudent}
           // onClick={() => navigate("/student/auth/courses")}
         />

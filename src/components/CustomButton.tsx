@@ -29,10 +29,10 @@ const CustomButton: FC<Props> = ({
       disabled={disabled}
       className={ov(
         cn(
-          `block bg-primary-500 w-full  tracking-wide capitalize transition duration-300 hover:bg-primary-300  scale-100 text-white my-6 rounded-sm  py-[0.7rem]  text-sm font-medium  ${classNames}`,
-          {
-            "opacity-0 pointer-events-none scale-0": hide,
-          },
+          `block bg-primary-500 w-full  tracking-wide capitalize transition duration-300 hover:bg-primary-300  scale-100 text-white mb-2 rounded-sm  py-[0.7rem]  text-sm font-medium  ${classNames}`,
+          // {
+          //   "opacity-0 pointer-events-none scale-0": ,
+          // },
           {
             "bg-slate-200 pointer-events-none": disabled,
           }
