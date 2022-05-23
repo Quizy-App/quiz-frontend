@@ -21,3 +21,17 @@
     transition-timing-function: cubic-bezier(0.48, -0.72, 0, 1.54);
   }
 }
+
+@layer components {
+  .btn {
+    @apply inline-block py-[0.6rem] px-[1rem] rounded-[6px] cursor-pointer text-sm;
+  }
+
+  .btn-light {
+    @apply btn bg-light-500 text-primary-500 hover:bg-light-400 hover:text-primary-500;
+  }
+
+  .btn-stroked {
+    @apply btn border-[1.5px] border-light-500 bg-transparent text-light-500 hover:text-light-500;
+  }
+}

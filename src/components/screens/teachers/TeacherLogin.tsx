@@ -2,26 +2,28 @@ import CustomButton from "../../CustomButton";
 import CustomInput from "../../CustomInput";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
+import { makeStudent } from "../../../features/userSlice";
 import { useAppDispatch } from "../../../hooks/stateHooks";
-import { makeTeacher } from "../../../features/userSlice";
-
-const StudentLogin = () => {
+const TeacherLogin = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const inputLabel = [
     {
       labelName: "Email",
     },
+
     {
       labelName: "Password",
     },
   ];
 
-  // Function to login as teacher
-  const onLoginTeacher = () => {
-    dispatch(makeTeacher());
-    navigate("/teacher/auth");
+  // Function to login as student
+  const onLoginStudent = () => {
+    dispatch(makeStudent());
+    navigate("/student/auth");
   };
+
   return (
     <main className="max-w-4xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
       <section className="   sm:w-[60%] w-full">
@@ -38,7 +40,7 @@ const StudentLogin = () => {
             </span>
           </div>
 
-          <h2 className="text-2xl text-primary-400 ">Student Login</h2>
+          <h2 className="text-2xl text-primary-400 ">Teacher Login</h2>
         </div>
 
         {inputLabel.map((label, i) => (
@@ -52,7 +54,7 @@ const StudentLogin = () => {
       <p className="text-gray-500 ">
         Don't have an account?{" "}
         <Link
-          to="/student/auth/sign_up"
+          to="/teacher/auth/sign_up"
           className="text-blue-400 cursor-pointer text-sm font-medium"
         >
           SignUp
@@ -60,16 +62,16 @@ const StudentLogin = () => {
       </p>
       <br />
       <p className="text-gray-500 ">
-        Not a Student?{" "}
+        Not a Teacher?{" "}
         <button
-          onClick={onLoginTeacher}
+          onClick={onLoginStudent}
           className="text-blue-400 cursor-pointer font-medium"
         >
-          Teacher Login
+          Student Login
         </button>
       </p>
     </main>
   );
 };
 
-export default StudentLogin;
+export default TeacherLogin;
