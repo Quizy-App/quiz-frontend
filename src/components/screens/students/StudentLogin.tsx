@@ -61,7 +61,7 @@ const StudentLogin = () => {
     }
   };
   return (
-    <main className="max-w-4xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
+    <main className="max-w-4xl flex flex-col justify-center w-full mx-auto items-center min-h-[90vh]">
       <section className="   sm:w-[60%] w-full">
         <div className="flex gap-2 items-center justify-center py-4">
           <h2 className="text-4xl font-bold text-primary-400 ">Login</h2>

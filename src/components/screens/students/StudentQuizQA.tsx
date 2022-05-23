@@ -9,11 +9,11 @@ import LoadingIndicator from "../../LoadingIndicator";
 
 const StudentQuizQA = () => {
   // const {}=useAppSelector(state=>)
-  const { data, isLoading } = useQuery(["quiz", "2", "1"], ({ queryKey }) =>
+  const { data, isLoading } = useQuery(["quiz", "2", "1" ], ({ queryKey }) =>
     getQuizQandA(queryKey[1], queryKey[2])
   );
 
-  const [radioBtn, setRadioBtnChange] = useState<string>();
+  const [radioBtn, setRadioBtnChange] = useState<{}>();
 
   useEffect(() => {
     console.log(data);
