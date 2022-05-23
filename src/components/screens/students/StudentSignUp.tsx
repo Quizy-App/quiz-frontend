@@ -1,4 +1,3 @@
-import React from "react";
 import CustomButton from "../../CustomButton";
 import CustomInput from "../../CustomInput";
 import { Icon } from "@iconify/react";
