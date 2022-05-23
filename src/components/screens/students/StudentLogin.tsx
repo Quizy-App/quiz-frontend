@@ -3,22 +3,35 @@ import CustomInput from "../../CustomInput";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/stateHooks";
-import { makeTeacher } from "../../../features/userSlice";
+import { makeTeacher, storeToken } from "../../../features/userSlice";
+import { UserLogin } from "../../../types";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { loginStudentRequest } from "../../../fetchers/student";
+import { storeStudent } from "../../../features/studentSlice";
 
 const StudentLogin = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const inputLabel = [
-    {
-      labelName: "email",
+  const [loginDetails, setLogin] = useState<UserLogin>({
+    email: "",
+    password: "",
+  });
+
+  const { mutate: loginMutate } = useMutation(loginStudentRequest, {
+    onSuccess: (data) => {
+      if (data?.accessToken) {
+        // console.log(data?.accessToken);
+        dispatch(storeToken(data?.accessToken));
+        dispatch(
+          storeStudent({
+            profile: data?.student,
+          })
+        );
+      }
     },
-    {
-      labelName: "password",
-    },
-  ];
+    onError: (err) => console.log(err),
+  });
 
   const [login, setlogin] = useState<{
     email: string;
@@ -33,26 +46,19 @@ const StudentLogin = () => {
     navigate("/teacher/auth");
   };
 
-  const handlerChange = (label: string, value: string) => {
-    setlogin({
-      ...login,
-      [label]: value,
+  // Function to handle login details
+  const handleDetails = (name: string, value: any) => {
+    setLogin({
+      ...loginDetails,
+      [name]: value,
     });
   };
 
-  const { mutate } = useMutation(loginStudentRequest, {
-    onSuccess(data) {
-      console.log(data);
-      if (data) {
-        navigate("/student/auth/courses");
-      }
-    },
-  });
-  const loginSubmit = () => {
-    if (login.email === "" || login.password === "") {
-      return;
+  // Function to login a student
+  const onLogin = () => {
+    if (loginDetails.email !== "" && loginDetails.password !== "") {
+      loginMutate(loginDetails);
     }
-    mutate(login);
   };
   return (
     <main className="max-w-4xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
@@ -73,20 +79,25 @@ const StudentLogin = () => {
           <h2 className="text-2xl text-primary-400 ">Student Login</h2>
         </div>
 
-        {inputLabel.map((label, i) => (
-          <CustomInput
-            key={i}
-            label={label.labelName}
-            onChange={(e) =>
-              handlerChange(label.labelName, e.currentTarget.value)
-            }
-          />
-        ))}
+        {/* {inputLabel.map((label, i) => ( */}
+        <CustomInput
+          type="email"
+          label="Email"
+          value={loginDetails.email}
+          onChange={(e) => handleDetails("email", e.currentTarget.value)}
+        />
+        <CustomInput
+          type="password"
+          label="Password"
+          value={loginDetails.password}
+          onChange={(e) => handleDetails("password", e.currentTarget.value)}
+        />
+        {/* ))} */}
         <CustomButton
-          classNames="mt-4 mb-"
+          classNames="mt-3"
           buttonLabel="Login"
-          onClick={loginSubmit}
-          disabled={!login.email || login.password.length < 5}
+          onClick={onLogin}
+          disabled={!loginDetails.email || !loginDetails.password}
         />
       </section>
       <p className="text-gray-500 ">
