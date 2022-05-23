@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "../../CustomButton";
 import cn from "classnames";
 import { overrideTailwindClasses as ov } from "tailwind-override";
