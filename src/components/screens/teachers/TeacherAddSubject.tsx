@@ -48,6 +48,7 @@ const TeacherAddSubject = () => {
       mutate(year);
     }
   }, [year]);
+
   return (
     <main className="max-w-7xl  w-full mx-auto ">
       {/* Welcome Heading */}
