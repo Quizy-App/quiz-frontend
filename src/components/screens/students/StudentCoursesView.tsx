@@ -2,15 +2,17 @@ import SubjectCard from "../../SubjectCard";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getSubjectList } from "../../../fetchers/getFunction";
-import { useAppSelector } from "../../../hooks/stateHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/stateHooks";
 import { useEffect } from "react";
 import { SubjectType } from "../../../types";
+import { storeSubjectId } from "../../../features/studentSlice";
 
 const StudentCoursesView = () => {
   const navigate = useNavigate();
-  const {} = useAppSelector((state) => state.user);
-  const { data } = useQuery(["sub-list", "2"], ({ queryKey }) =>
-    getSubjectList(queryKey[1])
+  const dispatch = useAppDispatch();
+  const { profile } = useAppSelector((state) => state.user);
+  const { data } = useQuery(["sub-list", profile?.year], ({ queryKey }) =>
+    getSubjectList(queryKey[1] as string)
   );
 
   useEffect(() => {
@@ -25,11 +27,11 @@ const StudentCoursesView = () => {
           <div className="flex flex-col gap-2 py-4 self-start ">
             <div>
               <span className="font-medium ">Branch :</span>
-              <span className="font-bold"> CSE</span>
+              <span className="font-bold"> {profile?.branch}</span>
             </div>
             <div>
               <span className="font-medium">Year :</span>
-              <span className="font-bold"> 2nd</span>
+              <span className="font-bold"> {profile?.year}</span>
             </div>
           </div>
         </div>
@@ -37,26 +39,15 @@ const StudentCoursesView = () => {
 
       {/* Subject cards */}
       <section className="grid md:grid-cols-3 sm:grid-cols-2 gap-4 py-4">
-        {/* {[1, 2, 3, 4].map((card:SubjectType, i) => (
-          <SubjectCard 
-            card={card}
-            onClick={() =>
-              navigate("/student/instructions", {
-                replace: false,
-              })
-            }
-            key={i}
-          />
-        ))} */}
-
         {data?.subjects?.map((card: SubjectType, i: number) => (
           <SubjectCard
             card={card}
-            onClick={() =>
+            onClick={() => {
+              dispatch(storeSubjectId({ subjectId: card._id }));
               navigate("/student/instructions", {
                 replace: false,
-              })
-            }
+              });
+            }}
             key={i}
           />
         ))}

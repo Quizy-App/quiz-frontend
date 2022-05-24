@@ -7,6 +7,9 @@ export type ProfileType = {
   password: string;
   __v: number;
   _id: string;
+  enrollmentNo: string;
+  branch: string;
+  year: number;
 };
 
 export interface UserState {

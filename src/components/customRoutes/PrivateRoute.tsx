@@ -11,13 +11,17 @@ const PrivateRoute = () => {
   const dispatch = useAppDispatch();
   const { accessToken, userType } = useAppSelector((state) => state.user);
 
-  const { data, isLoading } = useQuery(["profile"], getProfileInfo);
+  const { data, isLoading } = useQuery(["profile", userType], ({ queryKey }) =>
+    getProfileInfo(queryKey[1] as string)
+  );
 
   // const { authToken, userType } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (!isLoading) {
-      if (data?.name) {
+      if (data?.student && userType === "student") {
+        dispatch(profileSet(data?.student));
+      } else if (data?.name && userType === "teacher") {
         dispatch(profileSet(data));
       }
       // else {

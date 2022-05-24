@@ -68,7 +68,7 @@ export const addQues = async (data: {
 };
 
 // Function to login a student
-export const getQuizQandA = async (subject: string, page: string) => {
+export const getQuizQandA = async (subject: number, page: string) => {
   try {
     const res = await axios.get(
       `${apiUrl}/student/fetch_quiz/${subject}${page ? `?page='${page}` : ""} `

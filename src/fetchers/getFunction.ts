@@ -63,9 +63,9 @@ export const getSubjectsInfo = async (subject: string) => {
 };
 
 // Function to get profile info
-export const getProfileInfo = async () => {
+export const getProfileInfo = async (user: string) => {
   try {
-    const res = await axios.get(`${apiUrl}/teacher/profile`);
+    const res = await axios.get(`${apiUrl}/${user}/profile`);
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
@@ -75,7 +75,7 @@ export const getProfileInfo = async () => {
 };
 
 // Function to get profile info
-export const getSubjectList = async (year: string) => {
+export const getSubjectList = async (year: string | number) => {
   try {
     const res = await axios.get(`${apiUrl}/quiz/fetch_subjects/${year}`);
     return res.data;

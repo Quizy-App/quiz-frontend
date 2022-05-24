@@ -3,10 +3,12 @@ import { Student } from "../types";
 
 export interface UserState {
   profile: Student | null;
+  subjectId: string;
 }
 
 const initialState: UserState = {
   profile: null,
+  subjectId: "",
 };
 
 const studentSlice = createSlice({
@@ -19,9 +21,14 @@ const studentSlice = createSlice({
     flushStudentProfile: (state) => {
       state.profile = null;
     },
+
+    storeSubjectId: (state, action: PayloadAction<{ subjectId: string }>) => {
+      state.subjectId = action.payload.subjectId;
+    },
   },
 });
 
-export const { storeStudent, flushStudentProfile } = studentSlice.actions;
+export const { storeStudent, flushStudentProfile, storeSubjectId } =
+  studentSlice.actions;
 
 export default studentSlice.reducer;

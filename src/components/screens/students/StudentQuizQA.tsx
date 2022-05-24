@@ -8,9 +8,11 @@ import CustomButton from "../../CustomButton";
 import LoadingIndicator from "../../LoadingIndicator";
 
 const StudentQuizQA = () => {
-  // const {}=useAppSelector(state=>)
-  const { data, isLoading } = useQuery(["quiz", "2", "1" ], ({ queryKey }) =>
-    getQuizQandA(queryKey[1], queryKey[2])
+  const { subjectId } = useAppSelector((state) => state.student);
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useQuery(
+    ["quiz", subjectId, page],
+    ({ queryKey }) => getQuizQandA(queryKey[1] as number, queryKey[2] as string)
   );
 
   const [radioBtn, setRadioBtnChange] = useState<{}>();
@@ -62,7 +64,7 @@ const StudentQuizQA = () => {
                   classNames="text-sm font-medium tracking-widest"
                 />
                 <CustomButton
-                  onClick={() => "x"}
+                  onClick={() => setPage((page) => page + 1)}
                   buttonLabel="Next"
                   classNames="text-sm font-medium tracking-widest border-[1.4px] border-blue-500 bg-white text-primary-500 hover:bg-blue-400"
                 />

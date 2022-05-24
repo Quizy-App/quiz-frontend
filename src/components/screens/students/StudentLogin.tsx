@@ -3,7 +3,11 @@ import CustomInput from "../../CustomInput";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/stateHooks";
-import { makeTeacher, storeToken } from "../../../features/userSlice";
+import {
+  makeTeacher,
+  profileSet,
+  storeToken,
+} from "../../../features/userSlice";
 import { UserLogin } from "../../../types";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -23,11 +27,12 @@ const StudentLogin = () => {
       if (data?.accessToken) {
         // console.log(data?.accessToken);
         dispatch(storeToken(data?.accessToken));
-        dispatch(
-          storeStudent({
-            profile: data?.student,
-          })
-        );
+        // dispatch(
+        //   storeStudent({
+        //     profile: data?.student,
+        //   })
+        // );
+        dispatch(profileSet(data?.student));
       }
     },
     onError: (err) => console.log(err),
