@@ -34,10 +34,10 @@ const Navbar = () => {
           </span>
         </Link>
         {accessToken && (
-          <div className="w-[70%] flex justify-end items-center gap-3">
+          <div className="w-full flex justify-end items-center gap-3">
             <div className=" text-white font-semibold tracking-widest flex gap-3 items-center">
-              <span className="text-xl">Welcome</span>
-              <span className="capitalize border-b-blue-100 border-b-[1.6px] ">
+              <span className="sm:text-xl  ">Welcome</span>
+              <span className="capitalize border-b-blue-100 border-b-[1.6px] text-sm sm:text-base ">
                 {profile?.name}
               </span>
             </div>

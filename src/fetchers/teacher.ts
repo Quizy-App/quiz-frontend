@@ -124,3 +124,17 @@ export const getQuizQandA = async (subject: number, page: string) => {
     }
   }
 };
+
+// Function to login a student
+export const addAnswer = async (answerId: string) => {
+  try {
+    const res = await axios.post(`${apiUrl}/quiz/attempt_question`, {
+      answerId,
+    });
+    return res.data;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      throw err.response;
+    }
+  }
+};

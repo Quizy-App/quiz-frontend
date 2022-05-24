@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { Navigate, useNavigate } from "react-router-dom";
-import { getQuizQandA } from "../../../fetchers/teacher";
+import { addAnswer, getQuizQandA } from "../../../fetchers/teacher";
 import { useAppSelector } from "../../../hooks/stateHooks";
 import { QuizAns } from "../../../types";
 import CustomButton from "../../CustomButton";
@@ -14,11 +14,12 @@ const StudentQuizQA = () => {
     ["quiz", subjectId, page],
     ({ queryKey }) => getQuizQandA(queryKey[1] as number, queryKey[2] as string)
   );
+  const { mutate } = useMutation(addAnswer);
 
-  const [radioBtn, setRadioBtnChange] = useState<{}>();
+  const [answer, setAnswer] = useState("");
 
   useEffect(() => {
-    console.log(data);
+    console.log(setAnswer);
   }, []);
   const navigate = useNavigate();
   return (
@@ -45,7 +46,9 @@ const StudentQuizQA = () => {
                 {data?.choices.map((ans: QuizAns, i: number) => (
                   <li className="flex mt-4  items-center gap-2  " key={i}>
                     <input
-                      onChange={() => setRadioBtnChange(ans._id)}
+                      onChange={() => {
+                        setAnswer(ans._id);
+                      }}
                       type="radio"
                       name="answer"
                       className="w-4 h-4 "
@@ -58,13 +61,16 @@ const StudentQuizQA = () => {
               </ul>
 
               <div className="flex gap-4 mt-3">
-                <CustomButton
-                  onClick={() => navigate("/student/auth/result")}
+                {/* <CustomButton
+                  onClick={() => navigate("/student/result")}
                   buttonLabel="Submit"
                   classNames="text-sm font-medium tracking-widest"
-                />
+                /> */}
                 <CustomButton
-                  onClick={() => setPage((page) => page + 1)}
+                  onClick={() => {
+                    mutate(answer);
+                    setPage((page) => page + 1);
+                  }}
                   buttonLabel="Next"
                   classNames="text-sm font-medium tracking-widest border-[1.4px] border-blue-500 bg-white text-primary-500 hover:bg-blue-400"
                 />
