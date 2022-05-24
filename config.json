@@ -1,0 +1,17 @@
+{
+  "name": "college",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "concurrently": "^7.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "quiz": "concurrently \"cd quiz-backend && npm run dev \" \"cd quiz-frontend && npm start \"",
+    "installer": "concurrently \"cd quiz-backend && npm i \" \"cd quiz-frontend && npm i \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
