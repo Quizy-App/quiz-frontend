@@ -50,7 +50,6 @@ const TeacherAddQuestions = () => {
     console.log(mark, answers);
   }, [mark, answers]);
 
-  const questionOptions = [{}];
   return (
     <main className="max-w-7xl mx-auto">
       {/* Welcome Heading */}
