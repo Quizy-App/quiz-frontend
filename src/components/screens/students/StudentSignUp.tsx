@@ -69,48 +69,42 @@ const StudentSignUp = () => {
   return (
     <main className="max-w-xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
       <div className="flex gap-2 items-center justify-center py-4">
-        <div className="flex items-center">
-          <Icon
-            icon={"arcticons:quizlet"}
-            className="text-blue-400"
-            fontSize={45}
-          />
-          <span className="tracking-widest text-2xl text-blue-400 ml-[0.1rem] md:block hidden">
-            {" "}
-            uizzer
-          </span>
-        </div>
-
-        <h2 className="text-2xl text-primary-400 ">SignUp</h2>
+        <h2 className="text-4xl font-bold text-primary-400 ">SignUp</h2>
       </div>
       <section className=" grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
         {/* {inputLabel.map((label, i) => ( */}
         <CustomInput
+          placeholder="Enter your first name"
           label="First Name"
           parentClass="col-span-2 sm:col-span-1"
           value={student.firstName}
           onChange={(e) => handleDetails("firstName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your last name"
           parentClass="col-span-2 sm:col-span-1"
           label="Last Name"
           value={student.lastName}
           onChange={(e) => handleDetails("lastName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your enrollment no"
           parentClass="col-span-2 sm:col-span-1"
           label="Enrollment No."
           value={student.enrollmentNo}
           onChange={(e) => handleDetails("enrollmentNo", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your year"
           parentClass="col-span-2 sm:col-span-1"
           label="Year"
           type="number"
+          min={1}
           value={student.year}
           onChange={(e) => handleDetails("year", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your email"
           parentClass="col-span-2 "
           type="email"
           label="Email"
@@ -118,6 +112,7 @@ const StudentSignUp = () => {
           onChange={(e) => handleDetails("email", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your password"
           parentClass="col-span-2 sm:col-span-1"
           type="password"
           label="Password"
@@ -125,6 +120,7 @@ const StudentSignUp = () => {
           onChange={(e) => handleDetails("password", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your confirm password"
           parentClass="col-span-2 sm:col-span-1"
           type="password"
           label="Confirm Password"

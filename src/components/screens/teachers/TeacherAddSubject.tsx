@@ -19,8 +19,12 @@ const TeacherAddSubject = () => {
     },
   });
 
-  const { data, isLoading } = useQuery(["subjects", year], ({ queryKey }) =>
-    getSubjects(queryKey[1] as number)
+  const { data, isLoading } = useQuery(
+    ["subjects", year],
+    ({ queryKey }) => getSubjects(queryKey[1] as number),
+    {
+      enabled: year !== 0,
+    }
   );
   const { mutate: addSubjectMutate } = useMutation(addSubject, {
     onSuccess(data) {
@@ -43,7 +47,6 @@ const TeacherAddSubject = () => {
     if (year) {
       mutate(year);
     }
-    console.log(data);
   }, [year]);
   return (
     <main className="max-w-7xl  w-full mx-auto ">

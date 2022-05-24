@@ -1,8 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type ProfileType = {
+  createdOn: string;
+  email: string;
+  name: string;
+  password: string;
+  __v: number;
+  _id: string;
+};
+
 export interface UserState {
   userType: "teacher" | "student" | null;
   accessToken: string | null;
+  profile: ProfileType | null;
 }
 
 const storedUserType = localStorage.getItem("user-type") as
@@ -13,6 +23,7 @@ const storedAccessToken = localStorage.getItem("access-token") as string;
 const initialState: UserState = {
   userType: storedUserType || "student",
   accessToken: storedAccessToken,
+  profile: null,
 };
 
 const userSlice = createSlice({
@@ -34,12 +45,16 @@ const userSlice = createSlice({
     },
     logoutUser: (state) => {
       state.accessToken = null;
+      state.profile = null;
       localStorage.removeItem("access-token");
+    },
+    profileSet: (state, action: PayloadAction<ProfileType>) => {
+      state.profile = action.payload;
     },
   },
 });
 
-export const { logoutUser, makeStudent, makeTeacher, storeToken } =
+export const { logoutUser, makeStudent, makeTeacher, storeToken, profileSet } =
   userSlice.actions;
 
 export default userSlice.reducer;

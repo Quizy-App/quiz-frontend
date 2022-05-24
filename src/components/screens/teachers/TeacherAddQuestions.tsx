@@ -3,12 +3,52 @@ import CustomButton from "../../CustomButton";
 import cn from "classnames";
 import { overrideTailwindClasses as ov } from "tailwind-override";
 import { useAppSelector } from "../../../hooks/stateHooks";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { addQues } from "../../../fetchers/teacher";
+import { getSubjectsInfo } from "../../../fetchers/getFunction";
 const TeacherAddQuestions = () => {
   const { subjectId } = useAppSelector((state) => state.teacher);
 
   const [mark, setMark] = useState(0);
+  const { data, isLoading: subjectLoading } = useQuery(
+    ["subject-info", subjectId],
+    ({ queryKey }) => getSubjectsInfo(queryKey[1]),
+    {}
+  );
+  type ChoiceType = {
+    label: string;
+    title: string;
+    isPreferred: boolean;
+    questionId: string;
+  };
+
+  const [choice, setChoice] = useState<ChoiceType[]>([
+    {
+      label: "one",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+    {
+      label: "two",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+    {
+      label: "three",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+    {
+      label: "four",
+      title: "",
+      isPreferred: false,
+      questionId: "",
+    },
+  ]);
+
   const [question, setQuestion] = useState("");
   type Answer = {
     name: string;
@@ -28,19 +68,23 @@ const TeacherAddQuestions = () => {
       mutate({
         title: question,
         marks: mark,
-        subjectid: subjectId,
+        subjectId: subjectId,
       });
     }
   };
 
-  const handleChange = (name: string, val: string) => {
-    setAnswers([
-      ...answers,
-      {
-        name: name,
-        text: val,
-      },
-    ]);
+  const handleChange = (label: string, val: string) => {
+    // setChoice(choice.map(v => v.label === label?{...v,title: val,questionId:subjectId} : choice));
+  };
+
+  const radioButtonChange = (label: string, radioValue: boolean) => {
+    // setChoice(
+    //   choice.map((c => c.label === label ? {
+    //     ...c,
+    //     isPreferred:radioValue,
+    //   } : choice
+    //   ))
+    // )
   };
   useEffect(() => {
     setMark(1);
@@ -55,10 +99,12 @@ const TeacherAddQuestions = () => {
       {/* Welcome Heading */}
       <section>
         <div className="flex  flex-col justify-between py-4 gap-3">
-          <h1 className="text-3xl font-medium">Welcome Teacher</h1>
+          <h1 className="text-3xl font-medium">Add your subject questions</h1>
           <h3 className="font-medium">
             Add choices for{" "}
-            <span className="font-bold tracking-wider">Chemistry</span>
+            <span className="font-bold tracking-wider">
+              {!subjectLoading ? data.subject.name : ""}
+            </span>
           </h3>
         </div>
       </section>
@@ -71,7 +117,7 @@ const TeacherAddQuestions = () => {
           <h6 className="text-sm font-medium">
             This question will carry{" "}
             <select
-              value={1}
+              defaultValue={1}
               className=" border-[2px] border-blue-500 rounded-sm   mx-2"
               onChange={(e) => {
                 console.log(e.currentTarget.value);
@@ -112,14 +158,16 @@ const TeacherAddQuestions = () => {
 
               {/* Choices */}
               <section>
-                {[1, 2, 3, 4].map((v, i) => (
+                {choice.map((v, i) => (
                   <div className="my-2" key={i}>
                     <label htmlFor="" className="block">
                       Choice {i + 1}
                     </label>
                     <div className="flex gap-6 items-center mt-2">
                       <input
-                        onChange={(e) => console.log(e)}
+                        onChange={(e) =>
+                          radioButtonChange(v.label, e.target.checked)
+                        }
                         type="radio"
                         name="answer"
                         // checked={v===}
@@ -130,7 +178,7 @@ const TeacherAddQuestions = () => {
                         type="text"
                         name={"input" + v}
                         onChange={(e) =>
-                          handleChange(`input${v}`, e.currentTarget.value)
+                          handleChange(v.label, e.currentTarget.value)
                         }
                         className={ov(
                           cn(
@@ -142,11 +190,11 @@ const TeacherAddQuestions = () => {
                   </div>
                 ))}
               </section>
-
               <CustomButton
-                buttonLabel="Submit and Next"
+                buttonLabel="Submit And Next"
                 onClick={() => "x"}
-                classNames="text-sm font-medium tracking-wider bg-white text-primary-500 border-[1.4px] border-primary-500 hover:bg-primary-300"
+                classNames="text-sm font-medium tracking-wider my-4"
+                disabled
               />
             </div>
           </section>

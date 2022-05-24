@@ -8,7 +8,9 @@ import { logoutUser } from "../features/userSlice";
 
 const Navbar = () => {
   // const {} = useAppSelector(state => state.user)
-  const { accessToken, userType } = useAppSelector((state) => state.user);
+  const { accessToken, userType, profile } = useAppSelector(
+    (state) => state.user
+  );
   const dispatch = useAppDispatch();
 
   // Function to logout user
@@ -32,13 +34,21 @@ const Navbar = () => {
           </span>
         </Link>
         {accessToken && (
-          <button
-            onClick={onLogout}
-            className="btn btn-stroked flex items-center gap-2"
-          >
-            <Icon icon="prime:sign-out" fontSize={22} />
-            <span className="tracking-widest text-sm font-bold"> Logout</span>
-          </button>
+          <div className="w-[70%] flex justify-end items-center gap-3">
+            <div className=" text-white font-semibold tracking-widest flex gap-3 items-center">
+              <span className="text-xl">Welcome</span>
+              <span className="capitalize border-b-blue-100 border-b-[1.6px] ">
+                {profile?.name}
+              </span>
+            </div>
+            <button
+              onClick={onLogout}
+              className="btn btn-stroked flex items-center gap-2"
+            >
+              <Icon icon="prime:sign-out" fontSize={22} />
+              <span className="tracking-widest text-sm font-bold"> Logout</span>
+            </button>
+          </div>
         )}
         {/* <div className="flex items-center gap-3">
           <Link to="/" className="btn btn-light">

@@ -63,52 +63,52 @@ const TeacherSignUp = () => {
     registerMutate(newTeacher);
   };
   return (
-    <main className="max-w-4xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
+    <main className="max-w-2xl flex flex-col justify-center w-full mx-auto items-center min-h-[85vh]">
       <div className="flex gap-2 items-center justify-center py-4">
-        <div className="flex items-center">
-          <Icon
-            icon={"arcticons:quizlet"}
-            className="text-blue-400"
-            fontSize={45}
-          />
-          <span className="tracking-widest text-2xl text-blue-400 ml-[0.1rem] md:block hidden">
-            {" "}
-            uizzer
-          </span>
-        </div>
-
-        <h2 className="text-2xl text-primary-400 ">SignUp</h2>
+        <h2 className="text-4xl font-bold text-primary-400 ">SignUp</h2>
       </div>
       <section className=" grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
         <CustomInput
+          placeholder="Enter your first name"
           label="First Name"
           value={teacher.firstName}
           onChange={(e) => handleDetails("firstName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your last name"
           label="Last Name"
           value={teacher.lastName}
           onChange={(e) => handleDetails("lastName", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your email"
           type="email"
           label="Email"
           value={teacher.email}
           onChange={(e) => handleDetails("email", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your password"
           type="password"
           label="Password"
           value={teacher.password}
           onChange={(e) => handleDetails("password", e.currentTarget.value)}
         />
         <CustomInput
+          placeholder="Enter your confirm password"
           type="password"
           label="Confirm Password"
           value={teacher.confirmPwd}
           onChange={(e) => handleDetails("confirmPwd", e.currentTarget.value)}
         />
         <CustomButton
+          disabled={
+            teacher.password.length < 5 ||
+            !teacher.confirmPwd ||
+            !teacher.email ||
+            !teacher.firstName ||
+            !teacher.lastName
+          }
           buttonLabel="Sign Up"
           classNames="sm:col-span-2"
           onClick={onRegisterTeacher}

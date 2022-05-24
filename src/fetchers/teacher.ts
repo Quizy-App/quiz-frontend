@@ -55,10 +55,24 @@ export const addSubject = async (data: {
 export const addQues = async (data: {
   title: string;
   marks: number;
-  subjectid: string;
+  subjectId: string;
 }) => {
   try {
     const res = await axios.post(`${apiUrl}/quiz/add_question`, data);
+    return res.data;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      throw err.response;
+    }
+  }
+};
+
+// Function to login a student
+export const getQuizQandA = async (subject: string, page: string) => {
+  try {
+    const res = await axios.get(
+      `${apiUrl}/student/fetch_quiz/${subject}${page ? `?page='${page}` : ""} `
+    );
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
