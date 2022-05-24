@@ -4,17 +4,48 @@ import cn from "classnames";
 import { overrideTailwindClasses as ov } from "tailwind-override";
 import { useAppSelector } from "../../../hooks/stateHooks";
 import { useMutation, useQuery } from "react-query";
-import { addQues } from "../../../fetchers/teacher";
+import {
+  addAnswerRequest,
+  addQues,
+  fetchAnswerRequest,
+  fetchQuestionRequest,
+} from "../../../fetchers/teacher";
 import { getSubjectsInfo } from "../../../fetchers/getFunction";
+import { QuizAns } from "../../../types";
 const TeacherAddQuestions = () => {
   const { subjectId } = useAppSelector((state) => state.teacher);
-
+  const [questionSubmitted, setSubmitted] = useState(false);
+  const [answerSubmitted, setAnsSubmitted] = useState(false);
+  const [questionId, setQuestionId] = useState("");
   const [mark, setMark] = useState(0);
+  const [currentNum, setCurrentNum] = useState(1);
+
   const { data, isLoading: subjectLoading } = useQuery(
     ["subject-info", subjectId],
-    ({ queryKey }) => getSubjectsInfo(queryKey[1]),
-    {}
+    ({ queryKey }) => getSubjectsInfo(queryKey[1])
   );
+
+  const { data: quesData, isLoading: quesLoading } = useQuery(
+    ["question", currentNum, subjectId],
+    ({ queryKey }) =>
+      fetchQuestionRequest({
+        subject: queryKey[2].toString(),
+        questionNo: Number(queryKey[1]),
+      })
+  );
+
+  const { data: ansData, isLoading: ansLoading } = useQuery(
+    ["answers", questionId],
+    ({ queryKey }) => fetchAnswerRequest(queryKey[1]),
+    {
+      enabled: !!questionId,
+    }
+  );
+
+  const { mutate: answerMutate } = useMutation(addAnswerRequest, {
+    onSuccess: (data) => console.log(data),
+    onError: (err) => console.log(err),
+  });
   type ChoiceType = {
     label: string;
     title: string;
@@ -22,44 +53,46 @@ const TeacherAddQuestions = () => {
     questionId: string;
   };
 
-  const [choice, setChoice] = useState<ChoiceType[]>([
+  const [choices, setChoice] = useState<ChoiceType[]>([
     {
       label: "one",
       title: "",
       isPreferred: false,
-      questionId: "",
+      questionId,
     },
     {
       label: "two",
       title: "",
       isPreferred: false,
-      questionId: "",
+      questionId,
     },
     {
       label: "three",
       title: "",
       isPreferred: false,
-      questionId: "",
+      questionId,
     },
     {
       label: "four",
       title: "",
       isPreferred: false,
-      questionId: "",
+      questionId,
     },
   ]);
 
   const [question, setQuestion] = useState("");
-  type Answer = {
-    name: string;
-    text: string;
-  };
-  const [answers, setAnswers] = useState<Answer[]>([]);
+  // type Answer = {
+  //   name: string;
+  //   text: string;
+  // };
+  // const [answers, setAnswers] = useState<Answer[]>([]);
 
   const { mutate } = useMutation(addQues, {
     onSuccess(data) {
       console.log(data);
-      setQuestion("");
+      setQuestionId(data?.data?.id);
+      setQuestion(data?.data?.question);
+      setSubmitted(true);
     },
   });
 
@@ -74,25 +107,50 @@ const TeacherAddQuestions = () => {
   };
 
   const handleChange = (label: string, val: string) => {
-    // setChoice(choice.map(v => v.label === label?{...v,title: val,questionId:subjectId} : choice));
+    const updatedChoice = choices.map((choice) =>
+      choice.label === label ? { ...choice, title: val } : choice
+    );
+    setChoice(updatedChoice);
   };
 
   const radioButtonChange = (label: string, radioValue: boolean) => {
-    // setChoice(
-    //   choice.map((c => c.label === label ? {
-    //     ...c,
-    //     isPreferred:radioValue,
-    //   } : choice
-    //   ))
-    // )
+    const updatedChoice = choices.map((choice) =>
+      choice.label === label
+        ? { ...choice, isPreferred: radioValue }
+        : { ...choice, isPreferred: false }
+    );
+    setChoice(updatedChoice);
   };
-  useEffect(() => {
-    setMark(1);
-  }, []);
+
+  // Function to submit answers
+  const onSubmitAnswers = () => {
+    const quizChoices = choices.map((choice) => ({
+      title: choice.title,
+      isPreferred: choice.isPreferred,
+      questionId,
+    }));
+    answerMutate(quizChoices);
+  };
 
   useEffect(() => {
-    console.log(mark, answers);
-  }, [mark, answers]);
+    setMark(1);
+    if (!quesLoading) {
+      setQuestion(quesData?.questions?.title);
+      setQuestionId(quesData?.questions?._id);
+      setSubmitted(true);
+      // console.log(quesData);
+    }
+    if (!ansLoading && ansData) {
+      const savedAnswers = ansData?.answers?.map((ans: any) => ({
+        label: "",
+        title: ans.title,
+        isPreferred: ans.isPreferred,
+        questionId: ans.questionId,
+      }));
+      setChoice(savedAnswers);
+      setAnsSubmitted(true);
+    }
+  }, [quesData, ansData, ansLoading]);
 
   return (
     <main className="max-w-7xl mx-auto">
@@ -112,13 +170,13 @@ const TeacherAddQuestions = () => {
       <section>
         <div className="flex justify-between">
           <h2 className="font-medium">
-            Questions <span>1</span> of <span>10</span>
+            Questions <span>{currentNum}</span> of <span>10</span>
           </h2>
           <h6 className="text-sm font-medium">
             This question will carry{" "}
             <select
               defaultValue={1}
-              className=" border-[2px] border-blue-500 rounded-sm   mx-2"
+              className=" border-[2px] border-blue-500 rounded-sm mx-2"
               onChange={(e) => {
                 console.log(e.currentTarget.value);
                 setMark(Number(e.currentTarget.value));
@@ -146,19 +204,22 @@ const TeacherAddQuestions = () => {
                 <textarea
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
+                  disabled={questionSubmitted}
                   className="w-full border-[1.4px] border-gray-400 rounded-sm text-gray-600 py-1 px-2"
                 ></textarea>
-                <CustomButton
-                  buttonLabel="Add Question"
-                  onClick={addQuestion}
-                  classNames="text-sm font-medium tracking-wider my-4"
-                  disabled={question.length < 10}
-                />
+                {!questionSubmitted && (
+                  <CustomButton
+                    buttonLabel="Add Question"
+                    onClick={addQuestion}
+                    classNames="text-sm font-medium tracking-wider my-4"
+                    disabled={question.length < 10}
+                  />
+                )}
               </div>
 
               {/* Choices */}
               <section>
-                {choice.map((v, i) => (
+                {choices.map((v, i) => (
                   <div className="my-2" key={i}>
                     <label htmlFor="" className="block">
                       Choice {i + 1}
@@ -168,7 +229,9 @@ const TeacherAddQuestions = () => {
                         onChange={(e) =>
                           radioButtonChange(v.label, e.target.checked)
                         }
+                        disabled={answerSubmitted}
                         type="radio"
+                        checked={v.isPreferred}
                         name="answer"
                         // checked={v===}
                         className="w-5 h-5"
@@ -176,10 +239,12 @@ const TeacherAddQuestions = () => {
 
                       <input
                         type="text"
+                        value={v.title}
                         name={"input" + v}
                         onChange={(e) =>
                           handleChange(v.label, e.currentTarget.value)
                         }
+                        disabled={answerSubmitted}
                         className={ov(
                           cn(
                             "border-1 border-gray-400 py-2 px-2  rounded-sm text-gray-500 w-full"
@@ -190,12 +255,29 @@ const TeacherAddQuestions = () => {
                   </div>
                 ))}
               </section>
-              <CustomButton
-                buttonLabel="Submit And Next"
-                onClick={() => "x"}
-                classNames="text-sm font-medium tracking-wider my-4"
-                disabled
-              />
+              {answerSubmitted ? (
+                <div className="flex items-center gap-3">
+                  <CustomButton
+                    buttonLabel="Back"
+                    onClick={() => setCurrentNum(currentNum - 1)}
+                    classNames="text-sm font-medium tracking-wider my-4"
+                    // disabled
+                  />
+                  <CustomButton
+                    buttonLabel="Next"
+                    onClick={() => setCurrentNum(currentNum + 1)}
+                    classNames="text-sm font-medium tracking-wider my-4"
+                    // disabled
+                  />
+                </div>
+              ) : (
+                <CustomButton
+                  buttonLabel="Submit And Next"
+                  onClick={onSubmitAnswers}
+                  classNames="text-sm font-medium tracking-wider my-4"
+                  // disabled
+                />
+              )}
             </div>
           </section>
         ) : (
